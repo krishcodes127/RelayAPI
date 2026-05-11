@@ -1,0 +1,16 @@
+POST https://relayapi-6eua.onrender.com/APIRelay465
+
+{
+    "AuthenticateID": "you@email.com",
+    "password": "yourpassword",
+    "SenderID": "sender@email.com",
+    "Portnumber": 465
+}
+
+
+POST https://relayapi-6eua.onrender.com/APIRelay25
+
+{
+    "SenderID": "sender@email.com",
+    "Portnumber": 25
+}
