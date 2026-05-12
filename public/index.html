@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SMTP Relay Portal</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username"/>
+    <input type="password" id="password" placeholder="Password"/>
+    <button onclick="login()">Login</button>
+
+    <div id="portal" style="display:none">
+        
+        <h2>APIRelay25</h2>
+        <input type="email" id="senderID25" placeholder="Sender Email"/>
+        <button onclick="callAPI25()">Submit</button>
+        <pre id="result25"></pre>
+
+        <h2>APIRelay465</h2>
+        <input type="email" id="authID" placeholder="Authenticate Email"/>
+        <input type="password" id="pass465" placeholder="Password"/>
+        <input type="email" id="senderID465" placeholder="Sender Email"/>
+        <button onclick="callAPI465()">Submit</button>
+        <pre id="result465"></pre>
+
+    </div>
+
+    <script>
+    // const API_URL = 'http://localhost:4000';
+    const API_URL = '';
+
+    function login() {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        const users = { 'admin': 'nic123', 'user1': 'pass123' };
+        if(users[user] === pass) {
+            document.getElementById('portal').style.display = 'block';
+        } else {
+            alert('Invalid credentials!');
+        }
+    }
+
+    async function callAPI25() {
+        const response = await fetch(`${API_URL}/APIRelay25`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                SenderID: document.getElementById('senderID25').value,
+                Portnumber: 25
+            })
+        });
+        const data = await response.json();
+        document.getElementById('result25').innerHTML = 
+            JSON.stringify(data, null, 2);
+    }
+
+    async function callAPI465() {
+        const response = await fetch(`${API_URL}/APIRelay465`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                AuthenticateID: document.getElementById('authID').value,
+                password: document.getElementById('pass465').value,
+                SenderID: document.getElementById('senderID465').value,
+                Portnumber: 465
+            })
+        });
+        const data = await response.json();
+        document.getElementById('result465').innerHTML = 
+            JSON.stringify(data, null, 2);
+    }
+    </script>
+</body>
+</html>
